@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Day Auction</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Slick Slider CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+    
+    <style>
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('./assets/images/banner/banner.jpg') no-repeat center center/cover;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .section-padding {
+            padding: 80px 0;
+        }
+
+        .card {
+            transition: transform 0.3s;
+            margin: 15px;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding-top: 20px;
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: #ea7826;
+        }
+
+        .card-img-top {
+            height: 200px;
+            width: 200px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin: 20px auto;
+            border: 3px solid #ea7826;
+            padding: 3px;
+            background-color: white;
+        }
+
+        .card:hover .card-img-top {
+            border-color: #397dc0;
+            transform: scale(1.05);
+            transition: all 0.3s ease;
+        }
+
+        .captain-slider .card,
+        .batsmen-slider .card,
+        .bowlers-slider .card,
+        .allrounders-slider .card {
+            margin: 10px;
+        }
+
+        .slick-prev, .slick-next {
+            z-index: 1;
+        }
+
+        .slick-prev {
+            left: 25px;
+        }
+
+        .slick-next {
+            right: 25px;
+        }
+
+        .navbar {
+            background-color: rgba(0,0,0,0.8) !important;
+        }
+
+        .bid-btn {
+            background-color: #ea7826;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .bid-btn:hover {
+            background-color: #397dc0;
+            color: white;
+        }
+
+        .bg-light {
+            background-color: #f8f9fa;
+        }
+
+        .section-title {
+            position: relative;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: #ea7826;
+            margin: 20px auto;
+        }
+
+        .nav-link:hover {
+            color: #ea7826 !important;
+        }
+
+        .table-dark {
+            background-color: #397dc0 !important;
+        }
+
+        .alert-info {
+            background-color: rgba(57, 125, 192, 0.1);
+            border-color: #397dc0;
+            color: #397dc0;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: #ea7826;
+        }
+
+        .nav-item.active .nav-link {
+            color: #ea7826 !important;
+        }
+        .slick-prev:before, .slick-next:before{
+            color: #ea7826 !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Sports Auction</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#rules">Auction Rules</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#teams">Teams</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#captains">Captains</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#allrounders">All Rounders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#bowlers">Bowlers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#batsmen">Batsmen</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <h1 class="display-3 mb-4">Welcome to Sports Day Auction</h1>
+            <p class="lead mb-4">Bid for your favorite players and build your dream team!</p>
+            <a href="#teams" class="bid-btn btn-lg">Start Bidding</a>
+        </div>
+    </section>
+
+    <!-- Add Rules Section after Hero Section -->
+    <section id="rules" class="section-padding bg-light">
+        <div class="container">
+            <h2 class="section-title">Auction Rules</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="mb-4">Team Budget and Player Limits</h4>
+                            <ul class="list-group list-group-flush mb-4">
+                                <li class="list-group-item">
+                                    <i class="fas fa-money-bill-wave text-success me-2"></i>
+                                    Maximum team budget: 1 Crore and 50 Lacs BDT
+                                </li>
+                                <li class="list-group-item">
+                                    <i class="fas fa-users text-primary me-2"></i>
+                                    Maximum 7 male players per team
+                                </li>
+                            </ul>
+
+                            <h4 class="mb-4">Base Prices by Category</h4>
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>Player Category</th>
+                                            <th>Base Price (BDT)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Captain</td>
+                                            <td>5 Lacs</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Bowler</td>
+                                            <td>50 Thousands</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Batsman</td>
+                                            <td>1 Lac</td>
+                                        </tr>
+                                        <tr>
+                                            <td>All-rounder</td>
+                                            <td>2 Lacs</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="alert alert-info mt-4">
+                                <i class="fas fa-info-circle me-2"></i>
+                                All bids must be made in increments of 25,000 BDT
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Teams Section -->
+    <section id="teams" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Our Teams</h2>
+            <div class="row">
+                <div class="col-md-3 mb-4">
+                    <div class="card">
+                        <img src="./assets/images/players/Akramol Haque.png" class="card-img-top" alt="Akramol Haque">
+                        <div class="card-body">
+                            <h5 class="card-title">Thunder Dragons</h5>
+                            <p class="card-text">Owner: Akramol Haque</p>
+                            <p class="card-text"><small class="text-muted">Budget: 1.5 Crore BDT</small></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card">
+                        <img src="./assets/images/players/Mujammal Haque.png" class="card-img-top" alt="Mujammal Haque">
+                        <div class="card-body">
+                            <h5 class="card-title">Royal Knights</h5>
+                            <p class="card-text">Owner: Mujammal Haque</p>
+                            <p class="card-text"><small class="text-muted">Budget: 1.5 Crore BDT</small></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card">
+                        <img src="./assets/images/players/Rajib Chowdhury.png" class="card-img-top" alt="Rajib Chowdhury">
+                        <div class="card-body">
+                            <h5 class="card-title">Phoenix Warriors</h5>
+                            <p class="card-text">Owner: Rajib Chowdhury</p>
+                            <p class="card-text"><small class="text-muted">Budget: 1.5 Crore BDT</small></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card">
+                        <img src="./assets/images/players/Mushfiqur Rahman.png" class="card-img-top" alt="Mushfiqur Rahman">
+                        <div class="card-body">
+                            <h5 class="card-title">Eagle Strikers</h5>
+                            <p class="card-text">Owner: Mushfiqur Rahman</p>
+                            <p class="card-text"><small class="text-muted">Budget: 1.5 Crore BDT</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Captains Section -->
+    <section id="captains" class="section-padding bg-light">
+        <div class="container">
+            <h2 class="section-title">Team Captains</h2>
+            <div class="row">
+                <div class="col-md-3 mb-4">
+                    <div class="card">
+                        <img src="./assets/images/players/Mofizul Islam.png" class="card-img-top" alt="Mofizul">
+                        <div class="card-body">
+                            <h5 class="card-title">Mofizul</h5>
+                            <p class="card-text">Thunder Dragons Captain</p>
+                            <p class="card-text">Base Price: 5 Lacs</p>
+                            <button class="bid-btn w-100">Bid Now</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card">
+                        <img src="./assets/images/players/Shohidul Islam.png" class="card-img-top" alt="Shohidul">
+                        <div class="card-body">
+                            <h5 class="card-title">Shohidul</h5>
+                            <p class="card-text">Royal Knights Captain</p>
+                            <p class="card-text">Base Price: 5 Lacs</p>
+                            <button class="bid-btn w-100">Bid Now</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card">
+                        <img src="./assets/images/players/Shibly Ahmed.png" class="card-img-top" alt="Shibly">
+                        <div class="card-body">
+                            <h5 class="card-title">Shibly</h5>
+                            <p class="card-text">Phoenix Warriors Captain</p>
+                            <p class="card-text">Base Price: 5 Lacs</p>
+                            <button class="bid-btn w-100">Bid Now</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card">
+                        <img src="./assets/images/players/Mehedi Hasan.png" class="card-img-top" alt="Mehedi">
+                        <div class="card-body">
+                            <h5 class="card-title">Mehedi</h5>
+                            <p class="card-text">Eagle Strikers Captain</p>
+                            <p class="card-text">Base Price: 5 Lacs</p>
+                            <button class="bid-btn w-100">Bid Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- All Rounders Section -->
+    <section id="allrounders" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">All Rounders</h2>
+            <div class="allrounders-slider">
+                <div class="card">
+                    <img src="./assets/images/players/Abu Hurayra.png" class="card-img-top" alt="Abu Hurayra">
+                    <div class="card-body">
+                        <h5 class="card-title">Abu Hurayra</h5>
+                        <p class="card-text">All-rounder</p>
+                        <p class="card-text">Base Price: 2 Lacs</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Alauddin Rezvi.png" class="card-img-top" alt="Alauddin Rezvi">
+                    <div class="card-body">
+                        <h5 class="card-title">Alauddin Rezvi</h5>
+                        <p class="card-text">All-rounder</p>
+                        <p class="card-text">Base Price: 2 Lacs</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Mahmudul Islam.png" class="card-img-top" alt="Mahmudul Islam">
+                    <div class="card-body">
+                        <h5 class="card-title">Mahmudul Islam</h5>
+                        <p class="card-text">All-rounder</p>
+                        <p class="card-text">Base Price: 2 Lacs</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Mehedi Hasan.png" class="card-img-top" alt="Mehedi Hasan">
+                    <div class="card-body">
+                        <h5 class="card-title">Mehedi Hasan</h5>
+                        <p class="card-text">All-rounder</p>
+                        <p class="card-text">Base Price: 2 Lacs</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Mezbahul Rafi.png" class="card-img-top" alt="Mezbahul Rafi">
+                    <div class="card-body">
+                        <h5 class="card-title">Mezbahul Rafi</h5>
+                        <p class="card-text">All-rounder</p>
+                        <p class="card-text">Base Price: 2 Lacs</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Mofizul Islam.png" class="card-img-top" alt="Mofizul Islam">
+                    <div class="card-body">
+                        <h5 class="card-title">Mofizul Islam</h5>
+                        <p class="card-text">All-rounder</p>
+                        <p class="card-text">Base Price: 2 Lacs</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Mohammad Ashik.png" class="card-img-top" alt="Mohammad Ashikuzzaman">
+                    <div class="card-body">
+                        <h5 class="card-title">Mohammad Ashikuzzaman</h5>
+                        <p class="card-text">All-rounder</p>
+                        <p class="card-text">Base Price: 2 Lacs</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Sazzad Bashar.png" class="card-img-top" alt="Sazzad Bashar">
+                    <div class="card-body">
+                        <h5 class="card-title">Sazzad Bashar</h5>
+                        <p class="card-text">All-rounder</p>
+                        <p class="card-text">Base Price: 2 Lacs</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Shaeekh Khan.png" class="card-img-top" alt="Shaeekh Khan">
+                    <div class="card-body">
+                        <h5 class="card-title">Shaeekh Khan</h5>
+                        <p class="card-text">All-rounder</p>
+                        <p class="card-text">Base Price: 2 Lacs</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Shibly Ahmed.png" class="card-img-top" alt="Shibly Ahmed">
+                    <div class="card-body">
+                        <h5 class="card-title">Shibly Ahmed</h5>
+                        <p class="card-text">All-rounder</p>
+                        <p class="card-text">Base Price: 2 Lacs</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Shohidul Islam.png" class="card-img-top" alt="Shohidul Islam">
+                    <div class="card-body">
+                        <h5 class="card-title">Shohidul Islam</h5>
+                        <p class="card-text">All-rounder</p>
+                        <p class="card-text">Base Price: 2 Lacs</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Bowlers Section -->
+    <section id="bowlers" class="section-padding bg-light">
+        <div class="container">
+            <h2 class="section-title">Bowlers</h2>
+            <div class="bowlers-slider">
+                <div class="card">
+                    <img src="./assets/images/players/Arafat Hossain.png" class="card-img-top" alt="Arafat Hossain">
+                    <div class="card-body">
+                        <h5 class="card-title">Arafat Hossain</h5>
+                        <p class="card-text">Bowler</p>
+                        <p class="card-text">Base Price: 50 Thousands</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Iraz Ramin.png" class="card-img-top" alt="Iraz Ramin">
+                    <div class="card-body">
+                        <h5 class="card-title">Iraz Ramin</h5>
+                        <p class="card-text">Bowler</p>
+                        <p class="card-text">Base Price: 50 Thousands</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Nurul Huda.png" class="card-img-top" alt="Nurul Huda">
+                    <div class="card-body">
+                        <h5 class="card-title">Nurul Huda</h5>
+                        <p class="card-text">Bowler</p>
+                        <p class="card-text">Base Price: 50 Thousands</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Wadud Shuvro.png" class="card-img-top" alt="Wadud Shuvro">
+                    <div class="card-body">
+                        <h5 class="card-title">Wadud Shuvro</h5>
+                        <p class="card-text">Bowler</p>
+                        <p class="card-text">Base Price: 50 Thousands</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Siddiqur Rahman.png" class="card-img-top" alt="Siddiqur Rahman">
+                    <div class="card-body">
+                        <h5 class="card-title">Siddiqur Rahman</h5>
+                        <p class="card-text">Bowler</p>
+                        <p class="card-text">Base Price: 50 Thousands</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Sujit Haldar.png" class="card-img-top" alt="Sujit Haldar">
+                    <div class="card-body">
+                        <h5 class="card-title">Sujit Haldar</h5>
+                        <p class="card-text">Bowler</p>
+                        <p class="card-text">Base Price: 50 Thousands</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Batsmen Section -->
+    <section id="batsmen" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Batsmen</h2>
+            <div class="batsmen-slider">
+                <div class="card">
+                    <img src="./assets/images/players/Akramol Haque.png" class="card-img-top" alt="Akramol Haque">
+                    <div class="card-body">
+                        <h5 class="card-title">Akramol Haque</h5>
+                        <p class="card-text">Batsman</p>
+                        <p class="card-text">Base Price: 1 Lac</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Anik Rahman.png" class="card-img-top" alt="Anik Rahman">
+                    <div class="card-body">
+                        <h5 class="card-title">Anik Rahman</h5>
+                        <p class="card-text">Batsman</p>
+                        <p class="card-text">Base Price: 1 Lac</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Fairooz Afnad.png" class="card-img-top" alt="Fairooz Afnad">
+                    <div class="card-body">
+                        <h5 class="card-title">Fairooz Afnad</h5>
+                        <p class="card-text">Batsman</p>
+                        <p class="card-text">Base Price: 1 Lac</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Farhana Akter.png" class="card-img-top" alt="Farhana Akter">
+                    <div class="card-body">
+                        <h5 class="card-title">Farhana Akter</h5>
+                        <p class="card-text">Batsman</p>
+                        <p class="card-text">Base Price: 1 Lac</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Faysal Uddin.png" class="card-img-top" alt="Faysal Uddin">
+                    <div class="card-body">
+                        <h5 class="card-title">Faysal Uddin</h5>
+                        <p class="card-text">Batsman</p>
+                        <p class="card-text">Base Price: 1 Lac</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Jamil Bhuiyan.png" class="card-img-top" alt="Jamil Bhuiyan">
+                    <div class="card-body">
+                        <h5 class="card-title">Jamil Bhuiyan</h5>
+                        <p class="card-text">Batsman</p>
+                        <p class="card-text">Base Price: 1 Lac</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Khaleda Luna.png" class="card-img-top" alt="Khaleda Luna">
+                    <div class="card-body">
+                        <h5 class="card-title">Khaleda Luna</h5>
+                        <p class="card-text">Batsman</p>
+                        <p class="card-text">Base Price: 1 Lac</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Mithun Das.png" class="card-img-top" alt="Mithun Das">
+                    <div class="card-body">
+                        <h5 class="card-title">Mithun Das</h5>
+                        <p class="card-text">Batsman</p>
+                        <p class="card-text">Base Price: 1 Lac</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Mujammal Haque.png" class="card-img-top" alt="Mujammal Haque">
+                    <div class="card-body">
+                        <h5 class="card-title">Mujammal Haque</h5>
+                        <p class="card-text">Batsman</p>
+                        <p class="card-text">Base Price: 1 Lac</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Musfek Ahmed.png" class="card-img-top" alt="Musfek Ahmed">
+                    <div class="card-body">
+                        <h5 class="card-title">Musfek Ahmed</h5>
+                        <p class="card-text">Batsman</p>
+                        <p class="card-text">Base Price: 1 Lac</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Mushfiqur Rahman.png" class="card-img-top" alt="Mushfiqur Rahman">
+                    <div class="card-body">
+                        <h5 class="card-title">Mushfiqur Rahman</h5>
+                        <p class="card-text">Batsman</p>
+                        <p class="card-text">Base Price: 1 Lac</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Nazia Hossain.png" class="card-img-top" alt="Nazia Hossain">
+                    <div class="card-body">
+                        <h5 class="card-title">Nazia Hossain</h5>
+                        <p class="card-text">Batsman</p>
+                        <p class="card-text">Base Price: 1 Lac</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Partho Rahman.png" class="card-img-top" alt="Partho Rahman">
+                    <div class="card-body">
+                        <h5 class="card-title">Partho Rahman</h5>
+                        <p class="card-text">Batsman</p>
+                        <p class="card-text">Base Price: 1 Lac</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Rajib Chowdhury.png" class="card-img-top" alt="Rajib Chowdhury">
+                    <div class="card-body">
+                        <h5 class="card-title">Rajib Chowdhury</h5>
+                        <p class="card-text">Batsman</p>
+                        <p class="card-text">Base Price: 1 Lac</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Rehnuma Tahseen.png" class="card-img-top" alt="Rehnuma Tahseen">
+                    <div class="card-body">
+                        <h5 class="card-title">Rehnuma Tahseen</h5>
+                        <p class="card-text">Batsman</p>
+                        <p class="card-text">Base Price: 1 Lac</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Sakhawat Hossain.png" class="card-img-top" alt="Sakhawat Hossain">
+                    <div class="card-body">
+                        <h5 class="card-title">Sakhawat Hossain</h5>
+                        <p class="card-text">Batsman</p>
+                        <p class="card-text">Base Price: 1 Lac</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Sangida Kashem.png" class="card-img-top" alt="Sangida Kashem">
+                    <div class="card-body">
+                        <h5 class="card-title">Sangida Kashem</h5>
+                        <p class="card-text">Batsman</p>
+                        <p class="card-text">Base Price: 1 Lac</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Setu Islam.png" class="card-img-top" alt="Setu Islam">
+                    <div class="card-body">
+                        <h5 class="card-title">Setu Islam</h5>
+                        <p class="card-text">Batsman</p>
+                        <p class="card-text">Base Price: 1 Lac</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Sumely Nooren.png" class="card-img-top" alt="Sumely Nooren">
+                    <div class="card-body">
+                        <h5 class="card-title">Sumely Nooren</h5>
+                        <p class="card-text">Batsman</p>
+                        <p class="card-text">Base Price: 1 Lac</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Tamzida Azad.png" class="card-img-top" alt="Tamzida Azad">
+                    <div class="card-body">
+                        <h5 class="card-title">Tamzida Azad</h5>
+                        <p class="card-text">Batsman</p>
+                        <p class="card-text">Base Price: 1 Lac</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Tazin Mobarak.png" class="card-img-top" alt="Tazin Mobarak">
+                    <div class="card-body">
+                        <h5 class="card-title">Tazin Mobarak</h5>
+                        <p class="card-text">Batsman</p>
+                        <p class="card-text">Base Price: 1 Lac</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./assets/images/players/Zebel Akhand.png" class="card-img-top" alt="Zebel Akhand">
+                    <div class="card-body">
+                        <h5 class="card-title">Zebel Akhand</h5>
+                        <p class="card-text">Batsman</p>
+                        <p class="card-text">Base Price: 1 Lac</p>
+                        <button class="bid-btn w-100">Bid Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2025 SJ Innovation LLC - Sports Day</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    
+    <script>
+        $(document).ready(function(){
+            // Initialize all sliders
+            $('.captain-slider').slick({
+                dots: true,
+                infinite: true,
+                speed: 500,
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 3000,
+                responsive: [
+                    {
+                        breakpoint: 992,
+                        settings: {
+                            slidesToShow: 2
+                        }
+                    },
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            slidesToShow: 1
+                        }
+                    }
+                ]
+            });
+
+            $('.batsmen-slider').slick({
+                dots: true,
+                infinite: true,
+                speed: 500,
+                slidesToShow: 5,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 3500,
+                responsive: [
+                    {
+                        breakpoint: 992,
+                        settings: {
+                            slidesToShow: 2
+                        }
+                    },
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            slidesToShow: 1
+                        }
+                    }
+                ]
+            });
+
+            $('.bowlers-slider').slick({
+                dots: true,
+                infinite: true,
+                speed: 500,
+                slidesToShow: 4,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 4000,
+                responsive: [
+                    {
+                        breakpoint: 992,
+                        settings: {
+                            slidesToShow: 2
+                        }
+                    },
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            slidesToShow: 1
+                        }
+                    }
+                ]
+            });
+
+            $('.allrounders-slider').slick({
+                dots: true,
+                infinite: true,
+                speed: 500,
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 4500,
+                responsive: [
+                    {
+                        breakpoint: 992,
+                        settings: {
+                            slidesToShow: 2
+                        }
+                    },
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            slidesToShow: 1
+                        }
+                    }
+                ]
+            });
+
+            // Smooth scrolling for navigation
+            $('a[href*="#"]').on('click', function(e) {
+                e.preventDefault();
+                $('html, body').animate(
+                    {
+                        scrollTop: $($(this).attr('href')).offset().top - 70
+                    },
+                    500,
+                    'linear'
+                );
+            });
+
+            // Initialize bid buttons
+            $('.bid-btn').click(function() {
+                // Add your bidding logic here
+                alert('Bidding functionality will be implemented here!');
+            });
+        });
+    </script>
+</body>
+</html> 
